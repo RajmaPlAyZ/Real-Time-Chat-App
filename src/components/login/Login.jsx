@@ -68,20 +68,26 @@ const Login = () => {
         }
     };
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+const handleLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-        const formData = new FormData(e.target);
-        const { email, password } = Object.fromEntries(formData);
+    const formData = new FormData(e.target);
+    const { email, password } = Object.fromEntries(formData);
 
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-            setNotification({ message: 'Logged in successfully!', type: 'success' });
-        } catch (error) {
-            setNotification({ message: `An error occurred: ${error.message}`, type: 'error' });
-        }
-    };
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+        setNotification({ message: 'Logged in successfully!', type: 'success' });
+
+        // Refresh the page
+        window.location.reload();
+    } catch (error) {
+        setNotification({ message: `An error occurred: ${error.message}`, type: 'error' });
+    } finally {
+        setLoading(false);
+    }
+};
+
 
     return (
         <div className="login">
