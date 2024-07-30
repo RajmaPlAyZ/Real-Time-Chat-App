@@ -115,6 +115,14 @@ const Chat = () => {
     }
   };
 
+  // Handle Enter key press
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault(); // Prevent new line in input
+      handleSend();
+    }
+  };
+
   return (
     <div className="chat">
       <div className="top">
@@ -178,6 +186,7 @@ const Chat = () => {
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyDown} // Added keyDown handler
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
         <div className="emoji">
