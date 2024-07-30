@@ -13,7 +13,7 @@ import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
 import { format } from "timeago.js";
-import Detail from "../../components/details/Detail"; // Updated import path
+import Detail from "../detail/Detail";
 
 const Chat = () => {
   const [chat, setChat] = useState({ messages: [] }); // Initialize with default structure
