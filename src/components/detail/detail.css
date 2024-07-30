@@ -252,3 +252,15 @@
     display: flex; /* Show info when hamburger menu is active */
   }
 }
+
+/* Custom scrollbar for .chatList */
+.detail::-webkit-scrollbar {
+    width: 6px; /* Adjust the width of the scrollbar */
+}
+
+
+
+.detail::-webkit-scrollbar-thumb {
+    background: rgba(54, 14, 58, 0.462); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
