@@ -23,11 +23,16 @@ const Chat = () => {
     url: "",
     type: ""
   });
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [cameraStream, setCameraStream] = useState(null);
+  const [capturedImage, setCapturedImage] = useState(null);
 
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
 
   const endRef = useRef(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
 
   // Scroll to the bottom when chat messages change
   useEffect(() => {
@@ -62,15 +67,40 @@ const Chat = () => {
     }
   };
 
+  // Start the camera and set up the video feed
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setCameraStream(stream);
+      videoRef.current.srcObject = stream;
+      setIsCameraOpen(true);
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
+  };
+
+  // Capture image from the video feed
+  const captureImage = () => {
+    const context = canvasRef.current.getContext('2d');
+    context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+    const imageDataUrl = canvasRef.current.toDataURL('image/png');
+    setCapturedImage(imageDataUrl);
+    setIsCameraOpen(false);
+  };
+
   // Send message
   const handleSend = async () => {
-    if (text === "" && !file.file) return;
+    if (text === "" && !file.file && !capturedImage) return;
 
     let fileUrl = null;
 
     try {
       if (file.file) {
         fileUrl = await upload(file.file);
+      } else if (capturedImage) {
+        const response = await fetch(capturedImage);
+        const blob = await response.blob();
+        fileUrl = await upload(blob, 'image/png');
       }
 
       await updateDoc(doc(db, "chats", chatId), {
@@ -114,6 +144,7 @@ const Chat = () => {
         type: ""
       });
 
+      setCapturedImage(null);
       setText("");
     }
   };
@@ -176,6 +207,13 @@ const Chat = () => {
             </div>
           </div>
         )}
+        {capturedImage && (
+          <div className="message own">
+            <div className="texts">
+              <img src={capturedImage} alt="Captured Photo" />
+            </div>
+          </div>
+        )}
         <div ref={endRef}></div>
       </div>
       <div className="bottom">
@@ -190,7 +228,11 @@ const Chat = () => {
             accept="*/*"
             onChange={handleFile}
           />
-          <img src="./camera.png" alt="Camera Icon" />
+          <img
+            src="./camera.png"
+            alt="Camera Icon"
+            onClick={startCamera}
+          />
           <img src="./mic.png" alt="Microphone Icon" />
         </div>
         <input
@@ -223,9 +265,18 @@ const Chat = () => {
           Send
         </button>
       </div>
+
+      {/* Camera view and controls */}
+      {isCameraOpen && (
+        <div className="camera">
+          <video ref={videoRef} autoPlay></video>
+          <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
+          <button onClick={captureImage}>Capture</button>
+          <button onClick={() => setIsCameraOpen(false)}>Close</button>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Chat;
-
