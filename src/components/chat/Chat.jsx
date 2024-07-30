@@ -24,7 +24,6 @@ const Chat = () => {
     type: ""
   });
   const [isCameraOpen, setIsCameraOpen] = useState(false);
-  const [cameraStream, setCameraStream] = useState(null);
   const [capturedImage, setCapturedImage] = useState(null);
 
   const { currentUser } = useUserStore();
@@ -71,8 +70,8 @@ const Chat = () => {
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      setCameraStream(stream);
       videoRef.current.srcObject = stream;
+      videoRef.current.play();
       setIsCameraOpen(true);
     } catch (error) {
       console.error("Error accessing camera:", error);
@@ -81,9 +80,12 @@ const Chat = () => {
 
   // Capture image from the video feed
   const captureImage = () => {
-    const context = canvasRef.current.getContext('2d');
-    context.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-    const imageDataUrl = canvasRef.current.toDataURL('image/png');
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+    context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    const imageDataUrl = canvas.toDataURL('image/png');
     setCapturedImage(imageDataUrl);
     setIsCameraOpen(false);
   };
@@ -269,8 +271,8 @@ const Chat = () => {
       {/* Camera view and controls */}
       {isCameraOpen && (
         <div className="camera">
-          <video ref={videoRef} autoPlay></video>
-          <canvas ref={canvasRef} style={{ display: 'none' }} width="640" height="480"></canvas>
+          <video ref={videoRef} style={{ width: '100%', height: 'auto' }}></video>
+          <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
           <button onClick={captureImage}>Capture</button>
           <button onClick={() => setIsCameraOpen(false)}>Close</button>
         </div>
