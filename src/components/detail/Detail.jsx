@@ -10,7 +10,7 @@ const Detail = () => {
   const { currentUser } = useUserStore();
   const [photos, setPhotos] = useState([]);
   const [isDetailsVisible, setIsDetailsVisible] = useState(true);
-  const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false); // State for toggling chat settings
+  const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false);
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -59,8 +59,6 @@ const Detail = () => {
   };
 
   const handleCloseChat = () => {
-    // Implement chat closing functionality here
-    // Example: Reset chat state or navigate away from the chat
     resetChat();
   };
 
@@ -71,7 +69,7 @@ const Detail = () => {
       </div>
       <div className={`detail ${!isDetailsVisible ? 'hidden' : ''}`}>
         <div className="user">
-          <img src={user?.avatar || "./avatar.png"} alt="" />
+          <img src={user?.avatar || "./avatar.png"} alt="User Avatar" />
           <h2>{user?.username || "User Name"}</h2>
           <p> </p>
         </div>
@@ -79,7 +77,7 @@ const Detail = () => {
           <div className="option" onClick={toggleChatSettingsVisibility}>
             <div className="title">
               <span>Chat Settings</span>
-              <img src={isChatSettingsVisible ? "./arrowUp.png" : "./arrowDown.png"} alt="" />
+              <img src={isChatSettingsVisible ? "./arrowUp.png" : "./arrowDown.png"} alt="Toggle Settings" />
             </div>
           </div>
           {isChatSettingsVisible && (
@@ -99,13 +97,13 @@ const Detail = () => {
           <div className="option">
             <div className="title">
               <span>Privacy & help</span>
-              <img src="./arrowUp.png" alt="" />
+              <img src="./arrowUp.png" alt="Arrow" />
             </div>
           </div>
           <div className="option">
             <div className="title">
               <span>Shared photos</span>
-              <img src="./arrowDown.png" alt="" />
+              <img src="./arrowDown.png" alt="Arrow" />
             </div>
             <div className="photos">
               {photos.length > 0 ? (
@@ -126,7 +124,7 @@ const Detail = () => {
           <div className="option">
             <div className="title">
               <span>Shared Files</span>
-              <img src="./arrowUp.png" alt="" />
+              <img src="./arrowUp.png" alt="Arrow" />
             </div>
           </div>
           <div className="buttons-container">
