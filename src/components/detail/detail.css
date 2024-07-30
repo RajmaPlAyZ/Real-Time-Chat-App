@@ -1,82 +1,116 @@
-.detail-container {
-  position: relative;
-}
-
-.hamburger-menu {
-  cursor: pointer;
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: #007bff;
-  color: white;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+/* detail.css */
 
 .detail {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 100%;
-  background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  transition: transform 0.3s ease-in-out;
+  flex: 1;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  transition: max-height 0.5s ease-out; /* Smooth scroll-down animation */
+  max-height: 500px; /* Adjust this based on your content */
 }
 
 .detail.hidden {
-  transform: translateX(100%);
+  max-height: 0;
+  overflow: hidden; /* Hide overflow when collapsed */
 }
 
-.user {
-  padding: 20px;
+.detail .user {
+  padding: 15px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dddddd35;
 }
 
-.user img {
-  width: 50px;
-  height: 50px;
+.detail .user img {
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
 
-.info {
-  padding: 20px;
-}
-
-.option {
-  cursor: pointer;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.title {
+.detail .info {
+  padding: 15px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.title img {
+.detail .info .option {
+  /* Option section styles */
+}
+
+.detail .info .option .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail .info .option .title img {
   width: 20px;
   height: 20px;
 }
 
+.detail .info .photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.detail .info .photos .photoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.detail .info .photos .photoItem .photoDetail img {
+  width: 30px;
+  height: 30px;
+}
+
+.detail .info .photos .photoItem .photoDetail span {
+  font-size: 12px;
+  color: lightgray;
+  font-weight: 300;
+}
+
+.detail .info .photos .photoItem .icon {
+  width: 25px;
+  height: 25px;
+}
+
+.detail .info .buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail button {
+  padding: 10px 40px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.detail button.logout {
+  background-color: #dc3545;
+  padding: 6px 20px;
+}
+
+.detail button:hover {
+  opacity: 0.8;
+}
+
 .settings-options {
-  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .settings-options button {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin: 5px 0;
+  padding: 8px 20px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -85,42 +119,136 @@
 }
 
 .settings-options button.close-chat {
-  background-color: #dc3545;
+  background-color: #dc3545; /* Red color for close chat */
 }
 
-.photos {
-  padding: 10px 0;
+.settings-options button:hover {
+  opacity: 0.8;
 }
 
-.photoItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 5px 0;
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .detail .user {
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .detail .user img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .detail .info {
+    padding: 10px;
+    gap: 15px;
+  }
+
+  .detail .info .option .title img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .detail .info .photos {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .detail .info .photos .photoItem .photoDetail img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .detail .info .buttons-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .detail button {
+    padding: 8px 30px;
+  }
+
+  .detail button.logout {
+    padding: 5px 15px;
+  }
 }
 
-.photoDetail {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+@media (max-width: 480px) {
+  .detail .user {
+    padding: 10px;
+    gap: 5px;
+  }
+
+  .detail .user img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .detail .info {
+    padding: 8px;
+    gap: 10px;
+  }
+
+  .detail .info .option .title img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .detail .info .photos {
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .detail .info .photos .photoItem .photoDetail img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .detail .info .buttons-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .detail button {
+    padding: 6px 20px;
+  }
+
+  .detail button.logout {
+    padding: 4px 10px;
+  }
 }
 
-.photoDetail img {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+/* Hamburger Menu for Smaller Screens */
+.hamburger-menu {
+  display: none;
 }
 
-.buttons-container {
-  padding: 20px;
-}
+@media (max-width: 768px) {
+  .hamburger-menu {
+    display: block;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background-color: rgba(17, 25, 40, 0.3);
+    border-radius: 50%;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.buttons-container .logout {
-  width: 100%;
-  padding: 10px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  .hamburger-menu::before {
+    content: '\2630'; /* Unicode for hamburger icon */
+    font-size: 20px;
+    color: white;
+  }
+
+  .detail .info {
+    display: none; /* Hide info by default */
+  }
+
+  .hamburger-menu.active + .detail .info {
+    display: flex; /* Show info when hamburger menu is active */
+  }
 }
