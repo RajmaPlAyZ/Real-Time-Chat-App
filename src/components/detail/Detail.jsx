@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { arrayRemove, arrayUnion, doc, getDocs, collection, updateDoc, query, where } from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, getDocs, collection, query, where, updateDoc } from "firebase/firestore";
 import { useChatStore } from "../../lib/chatStore";
 import { auth, db } from "../../lib/firebase";
 import { useUserStore } from "../../lib/userStore";
@@ -9,7 +9,8 @@ const Detail = () => {
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock, resetChat } = useChatStore();
   const { currentUser } = useUserStore();
   const [photos, setPhotos] = useState([]);
-  const [isDetailsVisible, setIsDetailsVisible] = useState(true); // State for toggling details visibility
+  const [isDetailsVisible, setIsDetailsVisible] = useState(true);
+  const [isChatSettingsVisible, setIsChatSettingsVisible] = useState(false); // State for toggling chat settings
 
   useEffect(() => {
     const fetchPhotos = async () => {
@@ -20,7 +21,6 @@ const Detail = () => {
         const q = query(photosRef, where("senderId", "==", currentUser.id));
         const querySnapshot = await getDocs(q);
         const fetchedPhotos = querySnapshot.docs.map(doc => doc.data());
-        console.log('Fetched Photos:', fetchedPhotos); // Debug log
         setPhotos(fetchedPhotos);
       } catch (err) {
         console.log(err);
@@ -54,6 +54,16 @@ const Detail = () => {
     setIsDetailsVisible(prev => !prev);
   };
 
+  const toggleChatSettingsVisibility = () => {
+    setIsChatSettingsVisible(prev => !prev);
+  };
+
+  const handleCloseChat = () => {
+    // Implement chat closing functionality here
+    // Example: Reset chat state or navigate away from the chat
+    resetChat();
+  };
+
   return (
     <div className="detail-container">
       <div className="hamburger-menu" onClick={toggleDetailsVisibility}>
@@ -63,15 +73,29 @@ const Detail = () => {
         <div className="user">
           <img src={user?.avatar || "./avatar.png"} alt="" />
           <h2>{user?.username || "User Name"}</h2>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p> </p>
         </div>
         <div className="info">
-          <div className="option">
+          <div className="option" onClick={toggleChatSettingsVisibility}>
             <div className="title">
               <span>Chat Settings</span>
-              <img src="./arrowUp.png" alt="" />
+              <img src={isChatSettingsVisible ? "./arrowUp.png" : "./arrowDown.png"} alt="" />
             </div>
           </div>
+          {isChatSettingsVisible && (
+            <div className="settings-options">
+              <button onClick={handleBlock}>
+                {isCurrentUserBlocked
+                  ? "You are Blocked!"
+                  : isReceiverBlocked
+                  ? "User blocked"
+                  : "Block User"}
+              </button>
+              <button className="close-chat" onClick={handleCloseChat}>
+                Close Chat
+              </button>
+            </div>
+          )}
           <div className="option">
             <div className="title">
               <span>Privacy & help</span>
@@ -106,14 +130,7 @@ const Detail = () => {
             </div>
           </div>
           <div className="buttons-container">
-            <button onClick={handleBlock}>
-              {isCurrentUserBlocked
-                ? "You are Blocked!"
-                : isReceiverBlocked
-                ? "User blocked"
-                : "Block User"}
-            </button>
-            <button className="logout" onClick={handleLogout}>
+            <button onClick={handleLogout} className="logout">
               Logout
             </button>
           </div>
