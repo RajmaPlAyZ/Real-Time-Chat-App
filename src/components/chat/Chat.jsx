@@ -13,7 +13,6 @@ import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
 import { format } from "timeago.js";
-import Detail from "../detail/Detail";
 
 const Chat = () => {
   const [chat, setChat] = useState({ messages: [] }); // Initialize with default structure
@@ -23,7 +22,6 @@ const Chat = () => {
     file: null,
     url: "",
   });
-  const [isDetailVisible, setIsDetailVisible] = useState(false); // State for toggling Detail component
 
   const { currentUser } = useUserStore();
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
@@ -125,11 +123,6 @@ const Chat = () => {
     }
   };
 
-  // Toggle Detail component visibility
-  const toggleDetailVisibility = () => {
-    setIsDetailVisible((prev) => !prev);
-  };
-
   return (
     <div className="chat">
       <div className="top">
@@ -143,7 +136,7 @@ const Chat = () => {
         <div className="icons">
           <img src="./phone.png" alt="Phone Icon" />
           <img src="./video.png" alt="Video Icon" />
-          <img src="./info.png" alt="Info Icon" onClick={toggleDetailVisibility} /> {/* Added onClick handler */}
+          <img src="./info.png" alt="Info Icon" />
         </div>
       </div>
       <div className="center">
@@ -214,7 +207,6 @@ const Chat = () => {
           Send
         </button>
       </div>
-      {isDetailVisible && <Detail />} {/* Conditionally render Detail component */}
     </div>
   );
 };
