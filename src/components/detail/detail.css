@@ -1,6 +1,15 @@
+/* detail.css */
+
 .detail {
   flex: 1;
   overflow-x: hidden; /* Prevent horizontal overflow */
+  transition: max-height 0.5s ease-out; /* Smooth scroll-down animation */
+  max-height: 500px; /* Adjust this based on your content */
+}
+
+.detail.hidden {
+  max-height: 0;
+  overflow: hidden; /* Hide overflow when collapsed */
 }
 
 .detail .user {
@@ -91,6 +100,29 @@
 }
 
 .detail button:hover {
+  opacity: 0.8;
+}
+
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-options button {
+  padding: 8px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.settings-options button.close-chat {
+  background-color: #dc3545; /* Red color for close chat */
+}
+
+.settings-options button:hover {
   opacity: 0.8;
 }
 
