@@ -11,16 +11,17 @@ import {
 import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
-import upload from "../../lib/upload";
+import upload from "../../lib/upload"; // Ensure your upload function can handle various file types
 import { format } from "timeago.js";
 
 const Chat = () => {
-  const [chat, setChat] = useState({ messages: [] }); // Initialize with default structure
+  const [chat, setChat] = useState({ messages: [] });
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
-  const [img, setImg] = useState({
+  const [file, setFile] = useState({
     file: null,
     url: "",
+    type: ""
   });
 
   const { currentUser } = useUserStore();
@@ -36,7 +37,7 @@ const Chat = () => {
   // Fetch chat data from Firestore
   useEffect(() => {
     const unSub = onSnapshot(doc(db, "chats", chatId), (res) => {
-      setChat(res.data() || { messages: [] }); // Default to empty messages array
+      setChat(res.data() || { messages: [] });
     });
 
     return () => {
@@ -50,25 +51,26 @@ const Chat = () => {
     setOpen(false);
   };
 
-  // Handle image file selection
-  const handleImg = (e) => {
+  // Handle file selection
+  const handleFile = (e) => {
     if (e.target.files[0]) {
-      setImg({
+      setFile({
         file: e.target.files[0],
         url: URL.createObjectURL(e.target.files[0]),
+        type: e.target.files[0].type
       });
     }
   };
 
   // Send message
   const handleSend = async () => {
-    if (text === "") return;
+    if (text === "" && !file.file) return;
 
-    let imgUrl = null;
+    let fileUrl = null;
 
     try {
-      if (img.file) {
-        imgUrl = await upload(img.file);
+      if (file.file) {
+        fileUrl = await upload(file.file);
       }
 
       await updateDoc(doc(db, "chats", chatId), {
@@ -76,7 +78,7 @@ const Chat = () => {
           senderId: currentUser.id,
           text,
           createdAt: new Date(),
-          ...(imgUrl && { img: imgUrl }),
+          ...(fileUrl && { file: fileUrl, fileType: file.type }),
         }),
       });
 
@@ -106,9 +108,10 @@ const Chat = () => {
     } catch (err) {
       console.log(err);
     } finally {
-      setImg({
+      setFile({
         file: null,
         url: "",
+        type: ""
       });
 
       setText("");
@@ -118,7 +121,7 @@ const Chat = () => {
   // Handle Enter key press
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault(); // Prevent new line in input
+      e.preventDefault();
       handleSend();
     }
   };
@@ -148,16 +151,28 @@ const Chat = () => {
             key={message.createdAt}
           >
             <div className="texts">
-              {message.img && <img src={message.img} alt="Message Image" />}
+              {message.file && (
+                <a href={message.file} download>
+                  {message.fileType.startsWith('image/') ? (
+                    <img src={message.file} alt="Message File" />
+                  ) : (
+                    <p>{message.fileType.split('/')[1].toUpperCase()} File</p>
+                  )}
+                </a>
+              )}
               <p>{message.text}</p>
               <span>{format(message.createdAt.toDate())}</span>
             </div>
           </div>
         ))}
-        {img.url && (
+        {file.url && (
           <div className="message own">
             <div className="texts">
-              <img src={img.url} alt="Uploaded Image" />
+              {file.type.startsWith('image/') ? (
+                <img src={file.url} alt="Uploaded File" />
+              ) : (
+                <p>{file.type.split('/')[1].toUpperCase()} File</p>
+              )}
             </div>
           </div>
         )}
@@ -166,13 +181,14 @@ const Chat = () => {
       <div className="bottom">
         <div className="icons">
           <label htmlFor="file">
-            <img src="./img.png" alt="Attach Image Icon" />
+            <img src="./img.png" alt="Attach File Icon" />
           </label>
           <input
             type="file"
             id="file"
             style={{ display: "none" }}
-            onChange={handleImg}
+            accept="*/*"
+            onChange={handleFile}
           />
           <img src="./camera.png" alt="Camera Icon" />
           <img src="./mic.png" alt="Microphone Icon" />
@@ -186,7 +202,7 @@ const Chat = () => {
           }
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={handleKeyDown} // Added keyDown handler
+          onKeyDown={handleKeyDown}
           disabled={isCurrentUserBlocked || isReceiverBlocked}
         />
         <div className="emoji">
@@ -212,3 +228,4 @@ const Chat = () => {
 };
 
 export default Chat;
+
