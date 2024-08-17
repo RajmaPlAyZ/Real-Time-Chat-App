@@ -253,7 +253,6 @@ const Chat = () => {
         </button>
       </div>
 
-// Camera view and controls
 {isCameraOpen && (
   <div className="camera">
     <Webcam
