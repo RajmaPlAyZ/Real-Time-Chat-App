@@ -71,6 +71,11 @@ const Chat = () => {
     if (webcamRef.current) {
       const imageSrc = webcamRef.current.getScreenshot();
       setCapturedImage(imageSrc);
+      setFile({
+        file: null, // Ensure file state is cleared when capturing an image
+        url: "",
+        type: "image/png" // Set a default type for captured images
+      });
       setIsCameraOpen(false);
     }
   };
@@ -80,6 +85,7 @@ const Chat = () => {
     if (text === "" && !file.file && !capturedImage) return;
 
     let fileUrl = null;
+    let fileType = file.type || 'unknown/type'; // Default to 'unknown/type'
 
     try {
       if (file.file) {
@@ -95,7 +101,7 @@ const Chat = () => {
           senderId: currentUser.id,
           text,
           createdAt: new Date(),
-          ...(fileUrl && { file: fileUrl, fileType: file.type }),
+          ...(fileUrl && { file: fileUrl, fileType }),
         }),
       });
 
@@ -253,20 +259,20 @@ const Chat = () => {
         </button>
       </div>
 
-{isCameraOpen && (
-  <div className="camera">
-    <Webcam
-      audio={false}
-      ref={webcamRef}
-      screenshotFormat="image/png"
-      width="100%"
-    />
-    <div className="camera-controls">
-      <button className="camera-button capture-button" onClick={captureImage}>Capture</button>
-      <button className="camera-button close-button" onClick={() => setIsCameraOpen(false)}>Close</button>
-    </div>
-  </div>
-)}
+      {isCameraOpen && (
+        <div className="camera">
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/png"
+            width="100%"
+          />
+          <div className="camera-controls">
+            <button className="camera-button capture-button" onClick={captureImage}>Capture</button>
+            <button className="camera-button close-button" onClick={() => setIsCameraOpen(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
