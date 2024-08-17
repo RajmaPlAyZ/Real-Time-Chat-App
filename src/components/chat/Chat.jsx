@@ -253,19 +253,21 @@ const Chat = () => {
         </button>
       </div>
 
-      {/* Camera view and controls */}
-      {isCameraOpen && (
-        <div className="camera">
-          <Webcam
-            audio={false}
-            ref={webcamRef}
-            screenshotFormat="image/png"
-            width="100%"
-          />
-          <button onClick={captureImage}>Capture</button>
-          <button onClick={() => setIsCameraOpen(false)}>Close</button>
-        </div>
-      )}
+// Camera view and controls
+{isCameraOpen && (
+  <div className="camera">
+    <Webcam
+      audio={false}
+      ref={webcamRef}
+      screenshotFormat="image/png"
+      width="100%"
+    />
+    <div className="camera-controls">
+      <button className="camera-button capture-button" onClick={captureImage}>Capture</button>
+      <button className="camera-button close-button" onClick={() => setIsCameraOpen(false)}>Close</button>
+    </div>
+  </div>
+)}
     </div>
   );
 };
