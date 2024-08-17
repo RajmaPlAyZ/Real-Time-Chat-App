@@ -11,7 +11,7 @@ import {
 import { db } from "../../lib/firebase";
 import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
-import upload from "../../lib/upload"; // Ensure your upload function can handle various file types
+import upload from "../../lib/upload";
 import { format } from "timeago.js";
 
 const Chat = () => {
@@ -288,10 +288,10 @@ const Chat = () => {
       {/* Camera view and controls */}
       {isCameraOpen && (
         <div className="camera">
-          <video ref={videoRef} style={{ width: '100%', height: 'auto' }}></video>
-          <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+          <video ref={videoRef} style={{ width: "100%" }}></video>
           <button onClick={captureImage}>Capture</button>
           <button onClick={() => setIsCameraOpen(false)}>Close</button>
+          <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
         </div>
       )}
     </div>
