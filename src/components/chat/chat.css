@@ -1,189 +1,3 @@
-.chat {
-    flex: 2;
-    border-left: 1px solid #dddddd35;
-    border-right: 1px solid #dddddd35;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.chat .top {
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #dddddd35;
-    background-color: #f9f9f9;
-}
-
-.chat .top .user {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.chat .top .user img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.chat .top .user .texts {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.chat .top .user .texts span {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-.chat .top .user .texts p {
-    font-size: 14px;
-    font-weight: 300;
-    color: #a5a5a5;
-}
-
-.chat .top .icons {
-    display: flex;
-    gap: 20px;
-}
-
-.chat .top .icons img {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.chat .center {
-    padding: 20px;
-    flex: 1;
-    overflow-y: auto; /* Allows scrolling */
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    background-color: #fff;
-}
-
-/* Custom scrollbar for .center */
-.chat .center::-webkit-scrollbar {
-    width: 6px;
-}
-
-.chat .center::-webkit-scrollbar-thumb {
-    background: rgba(54, 14, 58, 0.462);
-    border-radius: 10px;
-}
-
-.chat .message {
-    max-width: 70%;
-    display: flex;
-    gap: 20px;
-}
-
-.chat .message.own {
-    align-self: flex-end;
-}
-
-.chat .message.own .texts p {
-    background-color: #5183fe;
-    color: #fff;
-}
-
-.chat .message img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.chat .message .texts {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.chat .message .texts img {
-    width: 100%;
-    height: 300px;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.chat .message .texts p {
-    padding: 10px;
-    background-color: rgba(17, 25, 40, 0.3);
-    border-radius: 10px;
-    color: #fff;
-}
-
-.chat .message .texts span {
-    font-size: 13px;
-    align-self: flex-start;
-    margin-top: 5px;
-    color: #a5a5a5;
-}
-
-.chat .bottom {
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-top: 1px solid #dddddd35;
-    background-color: #f9f9f9;
-    gap: 20px;
-    margin-top: auto;
-}
-
-.chat .bottom .icons {
-    display: flex;
-    gap: 20px;
-}
-
-.chat .bottom img {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-.chat .bottom input {
-    flex: 1;
-    background-color: rgba(54, 14, 58, 0.462);
-    border: none;
-    outline: none;
-    color: white;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-.chat .bottom .emoji {
-    position: relative;
-}
-
-.chat .bottom .emoji .picker {
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-}
-
-.chat .bottom .sendButton {
-    background-color: #5183fe;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.chat .bottom .sendButton:hover {
-    background-color: #3f6ae8;
-}
-
 /* Styling for webcam component */
 .chat .camera {
     position: fixed;
@@ -200,19 +14,28 @@
 }
 
 .chat .camera video {
-    width: 80%;
+    width: 50%; /* Adjust width as needed */
     height: auto;
     border-radius: 10px;
 }
 
+.chat .camera .controls {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    position: absolute;
+    bottom: 20px; /* Adjust bottom spacing */
+    right: 20px;  /* Adjust right spacing */
+}
+
 .chat .camera button {
-    margin-top: 20px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     background-color: #5183fe;
     color: white;
     cursor: pointer;
+    font-size: 16px;
 }
 
 .chat .camera button:hover {
@@ -220,13 +43,7 @@
 }
 
 .chat .camera .closeButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
     background-color: #ff4d4d;
-    color: white;
-    cursor: pointer;
 }
 
 .chat .camera .closeButton:hover {
