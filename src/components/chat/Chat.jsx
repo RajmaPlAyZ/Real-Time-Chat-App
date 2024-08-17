@@ -69,13 +69,19 @@ const Chat = () => {
   // Start the camera and set up the video feed
   const startCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-        setIsCameraOpen(true);
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current.play();
+          };
+          setIsCameraOpen(true);
+        } else {
+          console.error("Video reference is null");
+        }
       } else {
-        console.error("Video reference is null");
+        console.error("Media devices not supported");
       }
     } catch (error) {
       console.error("Error accessing camera:", error);
@@ -84,8 +90,8 @@ const Chat = () => {
 
   // Capture image from the video feed
   const captureImage = () => {
-    const canvas = canvasRef.current;
-    if (canvas && videoRef.current) {
+    if (videoRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
       canvas.width = videoRef.current.videoWidth;
       canvas.height = videoRef.current.videoHeight;
@@ -93,6 +99,8 @@ const Chat = () => {
       const imageDataUrl = canvas.toDataURL('image/png');
       setCapturedImage(imageDataUrl);
       setIsCameraOpen(false);
+    } else {
+      console.error("Video or canvas reference is null");
     }
   };
 
@@ -288,10 +296,10 @@ const Chat = () => {
       {/* Camera view and controls */}
       {isCameraOpen && (
         <div className="camera">
-          <video ref={videoRef} style={{ width: "100%" }}></video>
+          <video ref={videoRef} style={{ width: '100%' }}></video>
           <button onClick={captureImage}>Capture</button>
           <button onClick={() => setIsCameraOpen(false)}>Close</button>
-          <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
+          <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
         </div>
       )}
     </div>
