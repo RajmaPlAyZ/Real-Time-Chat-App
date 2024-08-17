@@ -200,14 +200,14 @@
 .camera-controls {
     position: absolute; /* Position relative to the camera container */
     bottom: 10px; /* Space from the bottom of the camera container */
-    right: -80px; /* Moves controls outside the camera container to the right */
+    right: 10px; /* Space from the right edge of the camera container */
     display: flex;
     flex-direction: column;
     gap: 10px; /* Space between buttons */
 }
 
-/* Style for individual camera controls */
-.camera-controls button {
+/* General style for camera buttons */
+.camera-button {
     background-color: #5183fe; /* Background color for buttons */
     color: white; /* Text color */
     border: none;
@@ -217,17 +217,17 @@
     font-size: 14px;
 }
 
-/* Hover effect for camera buttons */
-.camera-controls button:hover {
-    background-color: #3f6ae8; /* Darker background on hover */
-}
-
-/* Style for capture button */
+/* Specific style for capture button */
 .capture-button {
     /* Add any specific styles for capture button if needed */
 }
 
-/* Style for close button */
+/* Specific style for close button */
 .close-button {
     /* Add any specific styles for close button if needed */
+}
+
+/* Hover effect for camera buttons */
+.camera-button:hover {
+    background-color: #3f6ae8; /* Darker background on hover */
 }
