@@ -178,12 +178,19 @@
 
 /* Container for the webcam */
 .camera {
-    position: relative;
-    width: 200px; /* Adjust the width of the webcam */
-    height: 150px; /* Adjust the height of the webcam */
+    position: fixed; /* Make the camera container fixed on the screen */
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    width: 200px; /* Width of the webcam container */
+    height: 150px; /* Height of the webcam container */
     border-radius: 10px;
     overflow: hidden;
-    background-color: black; /* Ensures the background is black when webcam is off */
+    background-color: black; /* Background color for the webcam container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the video and buttons */
+    z-index: 1000; /* Ensure it is above other elements */
 }
 
 /* Style for the webcam video */
@@ -193,4 +200,49 @@
     object-fit: cover; /* Ensures the video covers the container */
 }
 
+/* Button container inside the webcam */
+.camera .camera-buttons {
+    position: absolute;
+    bottom: 10px; /* Space from the bottom */
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    width: 100%; /* Full width of the container */
+    justify-content: center; /* Center buttons horizontally */
+}
 
+/* Individual buttons */
+.camera .camera-buttons button {
+    background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent background */
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px; /* Padding around the button text */
+    cursor: pointer;
+    font-size: 14px; /* Font size of button text */
+    color: black; /* Button text color */
+    outline: none; /* Remove default outline */
+}
+
+/* Button hover effect */
+.camera .camera-buttons button:hover {
+    background-color: rgba(255, 255, 255, 0.9); /* Brighter background on hover */
+}
+
+/* Specific style for the capture button */
+.camera .camera-buttons .capture-button {
+    background-color: #5183fe; /* Capture button color */
+    color: white; /* Capture button text color */
+}
+
+.camera .camera-buttons .capture-button:hover {
+    background-color: #3f6ae8; /* Capture button hover color */
+}
+
+/* Specific style for the close button */
+.camera .camera-buttons .close-button {
+    background-color: #f44336; /* Close button color */
+    color: white; /* Close button text color */
+}
+
+.camera .camera-buttons .close-button:hover {
+    background-color: #d32f2f; /* Close button hover color */
+}
