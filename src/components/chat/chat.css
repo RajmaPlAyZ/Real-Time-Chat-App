@@ -181,8 +181,8 @@
     position: fixed; /* Keeps the camera container fixed on the screen */
     bottom: 70px; /* Adjust this value to position the camera container above the bottom section */
     right: 20px; /* Distance from the right edge */
-    width: 200px; /* Width of the webcam container */
-    height: 150px; /* Height of the webcam container */
+    width: 600px; /* Width of the webcam container */
+    height: 550px; /* Height of the webcam container */
     border-radius: 10px;
     overflow: hidden;
     background-color: black; /* Background color for the webcam container */
