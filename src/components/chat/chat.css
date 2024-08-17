@@ -178,9 +178,9 @@
 
 /* Container for the webcam */
 .camera {
-    position: fixed; /* Keep the camera container fixed on the screen */
-    bottom: 20px; /* Distance from the bottom */
-    right: 20px; /* Distance from the right */
+    position: fixed; /* Keeps the camera container fixed on the screen */
+    bottom: 70px; /* Adjust this value to position the camera container above the bottom section */
+    right: 20px; /* Distance from the right edge */
     width: 200px; /* Width of the webcam container */
     height: 150px; /* Height of the webcam container */
     border-radius: 10px;
@@ -196,59 +196,38 @@
     object-fit: cover; /* Ensures the video covers the container */
 }
 
-/* Container for the camera buttons */
-.camera-buttons-container {
+/* Container for the camera controls */
+.camera-controls {
     position: absolute; /* Position relative to the camera container */
     bottom: 10px; /* Space from the bottom of the camera container */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Adjust horizontal centering */
+    right: -80px; /* Moves controls outside the camera container to the right */
     display: flex;
-    justify-content: space-between; /* Space buttons evenly */
-    width: 100%; /* Full width of the camera container */
-    padding: 0 10px; /* Padding inside the button container */
-    box-sizing: border-box; /* Ensure padding is included in width */
+    flex-direction: column;
+    gap: 10px; /* Space between buttons */
 }
 
-/* Style for the individual buttons */
-.camera-buttons-container button {
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    border: 2px solid rgba(255, 255, 255, 0.6); /* Border for better visibility */
-    border-radius: 10px;
-    padding: 8px 12px; /* Padding around the button text */
+/* Style for individual camera controls */
+.camera-controls button {
+    background-color: #5183fe; /* Background color for buttons */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
     cursor: pointer;
-    font-size: 14px; /* Font size of button text */
-    color: black; /* Button text color */
-    outline: none; /* Remove default outline */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
+    font-size: 14px;
 }
 
-/* Button hover effect */
-.camera-buttons-container button:hover {
-    background-color: rgba(255, 255, 255, 1); /* Brighter background on hover */
-    transform: scale(1.05); /* Slightly enlarge button on hover */
+/* Hover effect for camera buttons */
+.camera-controls button:hover {
+    background-color: #3f6ae8; /* Darker background on hover */
 }
 
-/* Specific style for the capture button */
-.camera-buttons-container .capture-button {
-    background-color: #5183fe; /* Capture button color */
-    color: white; /* Capture button text color */
-    border-color: #3f6ae8; /* Border color matching the button */
+/* Style for capture button */
+.capture-button {
+    /* Add any specific styles for capture button if needed */
 }
 
-.camera-buttons-container .capture-button:hover {
-    background-color: #3f6ae8; /* Capture button hover color */
-    border-color: #2c4cb5; /* Darker border on hover */
-}
-
-/* Specific style for the close button */
-.camera-buttons-container .close-button {
-    background-color: #f44336; /* Close button color */
-    color: white; /* Close button text color */
-    border-color: #d32f2f; /* Border color matching the button */
-}
-
-.camera-buttons-container .close-button:hover {
-    background-color: #d32f2f; /* Close button hover color */
-    border-color: #b71c1c; /* Darker border on hover */
+/* Style for close button */
+.close-button {
+    /* Add any specific styles for close button if needed */
 }
