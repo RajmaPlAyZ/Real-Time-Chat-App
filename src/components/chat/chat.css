@@ -196,18 +196,20 @@
     object-fit: cover; /* Ensures the video covers the container */
 }
 
-/* Button container */
+/* Container for the camera buttons */
 .camera-buttons-container {
-    position: fixed; /* Keep the button container fixed on the screen */
-    bottom: 180px; /* Positioned above the webcam container */
-    right: 20px; /* Align with the webcam container */
+    position: absolute; /* Position relative to the camera container */
+    bottom: 10px; /* Space from the bottom of the camera container */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Adjust horizontal centering */
     display: flex;
-    flex-direction: column;
-    gap: 10px; /* Space between buttons */
-    z-index: 1001; /* Ensure buttons are above the camera container */
+    justify-content: space-between; /* Space buttons evenly */
+    width: 100%; /* Full width of the camera container */
+    padding: 0 10px; /* Padding inside the button container */
+    box-sizing: border-box; /* Ensure padding is included in width */
 }
 
-/* Individual buttons */
+/* Style for the individual buttons */
 .camera-buttons-container button {
     background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
     border: 2px solid rgba(255, 255, 255, 0.6); /* Border for better visibility */
