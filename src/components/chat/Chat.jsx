@@ -73,10 +73,13 @@ const Chat = () => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-          videoRef.current.addEventListener('loadedmetadata', () => {
+          videoRef.current.onloadeddata = () => {
             videoRef.current.play();
             setIsCameraOpen(true);
-          });
+          };
+          videoRef.current.onerror = (err) => {
+            console.error("Error with video stream:", err);
+          };
         } else {
           console.error("Video reference is null");
         }
