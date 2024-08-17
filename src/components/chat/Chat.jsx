@@ -13,6 +13,7 @@ import { useChatStore } from "../../lib/chatStore";
 import { useUserStore } from "../../lib/userStore";
 import upload from "../../lib/upload";
 import { format } from "timeago.js";
+import Webcam from "react-webcam";
 
 const Chat = () => {
   const [chat, setChat] = useState({ messages: [] });
@@ -30,8 +31,7 @@ const Chat = () => {
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
 
   const endRef = useRef(null);
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
+  const webcamRef = useRef(null);
 
   // Scroll to the bottom when chat messages change
   useEffect(() => {
@@ -66,44 +66,12 @@ const Chat = () => {
     }
   };
 
-  // Start the camera and set up the video feed
-  const startCamera = async () => {
-    try {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.onloadeddata = () => {
-            videoRef.current.play();
-            setIsCameraOpen(true);
-          };
-          videoRef.current.onerror = (err) => {
-            console.error("Error with video stream:", err);
-          };
-        } else {
-          console.error("Video reference is null");
-        }
-      } else {
-        console.error("Media devices not supported");
-      }
-    } catch (error) {
-      console.error("Error accessing camera:", error);
-    }
-  };
-
-  // Capture image from the video feed
+  // Capture image from the webcam feed
   const captureImage = () => {
-    if (videoRef.current && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
-      canvas.width = videoRef.current.videoWidth;
-      canvas.height = videoRef.current.videoHeight;
-      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-      const imageDataUrl = canvas.toDataURL('image/png');
-      setCapturedImage(imageDataUrl);
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setCapturedImage(imageSrc);
       setIsCameraOpen(false);
-    } else {
-      console.error("Video or canvas reference is null");
     }
   };
 
@@ -175,17 +143,6 @@ const Chat = () => {
       handleSend();
     }
   };
-
-  // Cleanup media stream on component unmount
-  useEffect(() => {
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-      }
-    };
-  }, []);
 
   return (
     <div className="chat">
@@ -261,7 +218,7 @@ const Chat = () => {
           <img
             src="./camera.png"
             alt="Camera Icon"
-            onClick={startCamera}
+            onClick={() => setIsCameraOpen(true)}
           />
           <img src="./mic.png" alt="Microphone Icon" />
         </div>
@@ -299,10 +256,14 @@ const Chat = () => {
       {/* Camera view and controls */}
       {isCameraOpen && (
         <div className="camera">
-          <video ref={videoRef} style={{ width: '100%' }}></video>
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/png"
+            width="100%"
+          />
           <button onClick={captureImage}>Capture</button>
           <button onClick={() => setIsCameraOpen(false)}>Close</button>
-          <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
         </div>
       )}
     </div>
