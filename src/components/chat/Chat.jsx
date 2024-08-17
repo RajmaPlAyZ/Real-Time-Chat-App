@@ -70,9 +70,13 @@ const Chat = () => {
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-      videoRef.current.srcObject = stream;
-      videoRef.current.play();
-      setIsCameraOpen(true);
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+        setIsCameraOpen(true);
+      } else {
+        console.error("Video reference is null");
+      }
     } catch (error) {
       console.error("Error accessing camera:", error);
     }
@@ -81,13 +85,15 @@ const Chat = () => {
   // Capture image from the video feed
   const captureImage = () => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const imageDataUrl = canvas.toDataURL('image/png');
-    setCapturedImage(imageDataUrl);
-    setIsCameraOpen(false);
+    if (canvas && videoRef.current) {
+      const context = canvas.getContext('2d');
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+      const imageDataUrl = canvas.toDataURL('image/png');
+      setCapturedImage(imageDataUrl);
+      setIsCameraOpen(false);
+    }
   };
 
   // Send message
@@ -158,6 +164,17 @@ const Chat = () => {
       handleSend();
     }
   };
+
+  // Cleanup media stream on component unmount
+  useEffect(() => {
+    return () => {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
+    };
+  }, []);
 
   return (
     <div className="chat">
