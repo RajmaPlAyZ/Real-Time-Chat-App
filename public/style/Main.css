@@ -1,146 +1,302 @@
 /* INDEX.CSS */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+
+body{
+  background-image: url("/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+}
+
+/* Adjustments for medium screens */
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll; /* Change to scroll for better performance on medium screens */
   }
-  
-  
-  body{
-    background-image: url("/bg.jpg");
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: white;
+}
+
+/* Adjustments for small screens */
+@media (max-width: 768px) {
+  body {
+    background-size: cover; /* Maintain cover size for background */
   }
-  
-  .container{
-    width: 90vw;
-    height: 90vh;
-    background-color: #012a4a;
-    /*backdrop-filter: blur(19px) saturate(180%);
-    -webkit-backdrop-filter: blur(19px) saturate(180%);*/
-    border-radius: 12px;
-    border: 1px solid rgba(253, 253, 253, 0.753);
-    display: flex;
+}
+
+/* Adjustments for very small screens */
+@media (max-width: 480px) {
+  body {
+    background-size: cover; /* Ensure background covers the viewport */
+    background-attachment: scroll; /* Use scroll for fixed background issues on very small screens */
   }
-  
-  .loading{
-    padding: 50px;
-    font-size: 36px;
-    border-radius: 10px;
-    background-color: rgba(17, 25, 40, 0.9);
+}
+
+
+.container{
+  width: 90vw;
+  height: 90vh;
+  background-color: #012a4a;
+  /*backdrop-filter: blur(19px) saturate(180%);
+  -webkit-backdrop-filter: blur(19px) saturate(180%);*/
+  border-radius: 12px;
+  border: 1px solid rgba(253, 253, 253, 0.753);
+  display: flex;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .container {
+    width: 95vw; /* Adjust width for medium screens */
+    height: 85vh; /* Adjust height for medium screens */
+    padding: 15px; /* Reduce padding */
   }
-  
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90vw; /* Further adjust width for smaller screens */
+    height: 85vh; /* Further adjust height for smaller screens */
+    padding: 10px; /* Reduce padding further */
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 90vw; /* Full width on very small screens */
+    height: 85vh; /* Adjust height for very small screens */
+    padding: 8px; /* Minimal padding for very small screens */
+    margin-top: 10px; /* Add margin to prevent overlap */
+  }
+}
+
+.loading{
+  padding: 50px;
+  font-size: 36px;
+  border-radius: 10px;
+  background-color: rgba(17, 25, 40, 0.9);
+}
+
+
+
 
 /* LOGIN.CSS */
 
+/* Base styles */
 .login {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 100px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 30px; /* Reduced gap to bring login and signup closer */
+  padding: 20px; /* Base padding */
 }
 
 .login .item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .login .item form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 
 .login .item form input {
-    padding: 20px;
-    border: none;
-    outline: none;
-    background-color: rgba(17, 25, 40, 0.6);
-    color: white;
-    border-radius: 5px;
+  padding: 15px;
+  border: none;
+  outline: none;
+  background-color: rgba(17, 25, 40, 0.6);
+  color: white;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 350px;
+  font-size: 14px;
 }
 
 .login .item form label {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    text-decoration: underline;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
 }
 
 .login .item form label img {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    object-fit: cover;
-    opacity: 0.6;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  opacity: 0.6;
 }
 
 .login .item form button {
-    width: 100%;
-    padding: 20px;
-    border: none;
-    background-color: #1f8ef1;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: #1f8ef1;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .login .item form button:disabled {
-    cursor: not-allowed;
-    background-color: #1f8ff19c;
+  cursor: not-allowed;
+  background-color: #1f8ff19c;
 }
 
 .login .separator {
-    height: 80%;
-    width: 2px;
-    background-color: #dddddd35;
+  height: 80%;
+  width: 2px;
+  background-color: #dddddd35;
 }
 
 .notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px;
+  border-radius: 5px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
 }
 
 .notification.success {
-    background-color: #4caf50;
-    color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 .notification.error {
-    background-color: #f44336;
-    color: white;
+  background-color: #f44336;
+  color: white;
 }
 
 .notification button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-left: 10px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .login {
+      gap: 20px; /* Adjust gap for medium screens */
+  }
+
+  .login .item form input,
+  .login .item form button {
+      max-width: 80%; /* Slightly narrower inputs and buttons */
+  }
+}
+
+@media (max-width: 768px) {
+  .login {
+      flex-direction: column;
+      gap: 0px; /* Reduce gap further on smaller screens */
+      padding: 15px;
+  }
+
+  .login .separator {
+    display: none;
+  }
+
+  .login .item form input,
+  .login .item form button {
+      max-width: 90%;
+  }
+
+  .notification {
+      top: 10px;
+      right: 10px;
+      padding: 6px;
+      font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .login {
+      padding: 10px;
+      gap: 10px; /* Further reduce gap */
+  }
+
+  .login .item form {
+      gap: 15px;
+  }
+
+  .login .item form input {
+      padding: 12px;
+      font-size: 13px;
+  }
+
+  .login .item form button {
+      padding: 12px;
+      font-size: 13px;
+  }
+
+  .notification {
+      font-size: 12px;
+      padding: 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+      padding: 8px;
+      gap: 15px; /* Even closer gap for very small screens */
+      margin-top: 10px;
+  }
+
+  .login .item form {
+      gap: 15px; /* Reduce gap between form elements */
+  }
+
+  .login .item form input {
+      padding: 10px;
+      font-size: 12px; /* Smaller font size */
+  }
+
+  .login .item form button {
+      padding: 10px;
+      font-size: 12px; /* Smaller font size */
+  }
+
+  .notification {
+      font-size: 12px;
+      padding: 4px;
+  }
+
+  .notification button {
+      font-size: 12px;
+  }
 }
 
 
