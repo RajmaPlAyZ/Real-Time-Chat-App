@@ -3,7 +3,7 @@
     flex-direction: column;
     height: 100%; /* Ensure it takes full height of parent container */
     font-family: Arial, sans-serif;
-    background-color: #e5ddd5; /* Same as chat-messages background */
+    background-color: #012a4a; /* Same as chat-messages background */
     border-radius: 12px;
     overflow: hidden; /* Prevent content overflow */
   }
@@ -13,8 +13,7 @@
     justify-content: space-between;
     padding: 10px 15px; /* Adjusted for smaller spacing */
     align-items: center;
-    background-color: #fff; /* Header background */
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid;
   }
   
   .user-info {

@@ -30,7 +30,6 @@ const App = () => {
       {currentUser ? (
         <>
           <List />
-          {chatId}
         </>
       ) : (
         <Login />

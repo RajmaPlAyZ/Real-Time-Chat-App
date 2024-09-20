@@ -91,11 +91,7 @@ body {
     background-color: #1f8ff19c;
 }
 
-.login .separator {
-    height: 80%;
-    width: 2px;
-    background-color: #dddddd35;
-}
+
 
 .notification {
     position: fixed;
@@ -128,4 +124,30 @@ body {
     cursor: pointer;
     margin-left: 8px;
 }
+
+
+
+@media (max-width: 768px) {
+    .login {
+        flex-direction: column;
+        gap: 15px; /* Reduce gap further on smaller screens */
+        padding: 15px;
+    }
+  
+    .login .separator {
+      display: none;
+    }
+  
+    .login .item form input,
+    .login .item form button {
+        max-width: 90%;
+    }
+  
+    .notification {
+        top: 10px;
+        right: 10px;
+        padding: 6px;
+        font-size: 12px;
+    }
+  }
 
