@@ -130,7 +130,7 @@ body {
 @media (max-width: 768px) {
     .login {
         flex-direction: column;
-        gap: 15px; /* Reduce gap further on smaller screens */
+        gap: 12px; /* Reduce gap further on smaller screens */
         padding: 15px;
     }
   
