@@ -22,8 +22,8 @@ body {
 }
 
 .container{
-  width: 90vw;
-  height: 90vh;
+  width: 95vw;
+  height: 95vh;
   background-color: #012a4a;
   /*backdrop-filter: blur(19px) saturate(180%);
   -webkit-backdrop-filter: blur(19px) saturate(180%);*/
