@@ -26,11 +26,12 @@ const Chat = () => {
   });
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
+  const [showIcons, setShowIcons] = useState(false); // State to track icon visibility
+  const [emojiPickerPosition, setEmojiPickerPosition] = useState({});
 
   const { currentUser } = useUserStore();
-  const { chatId, user, isCurrentUserBlocked, isReceiverBlocked } =
-    useChatStore();
-
+  const { chatId, user } = useChatStore();
+  
   const endRef = useRef(null);
   const webcamRef = useRef(null);
 
@@ -134,6 +135,7 @@ const Chat = () => {
 
       setCapturedImage(null);
       setText("");
+      setShowIcons(false); // Hide icons after sending
     }
   };
 
@@ -142,6 +144,30 @@ const Chat = () => {
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const toggleIcons = () => {
+    setShowIcons((prev) => !prev); // Toggle the visibility of icons
+  };
+
+  const toggleEmojiPicker = (e) => {
+    const emojiPickerElement = document.querySelector('.emoji-picker');
+    const container = document.querySelector('.chat-container');
+
+    if (emojiPickerElement) {
+      const { bottom } = e.target.getBoundingClientRect();
+      const { height: pickerHeight } = emojiPickerElement.getBoundingClientRect();
+      const { height: containerHeight } = container.getBoundingClientRect();
+
+      // Adjust position if needed
+      if (bottom + pickerHeight > containerHeight) {
+        setEmojiPickerPosition({ top: `-100%`, left: `0` }); // Adjust if it goes out
+      } else {
+        setEmojiPickerPosition({});
+      }
+    }
+
+    setOpen((prev) => !prev);
   };
 
   return (
@@ -193,22 +219,29 @@ const Chat = () => {
 
       <div className="chat-input-section">
         <div className="input-icons">
-          <label htmlFor="file" className="icon-label">
-            <img src="./img.png" alt="Attach File" />
-          </label>
-          <input
-            type="file"
-            id="file"
-            style={{ display: "none" }}
-            onChange={handleFile}
-          />
-          <img
-            src="./camera.png"
-            alt="Camera"
-            className="icon"
-            onClick={() => setIsCameraOpen(true)}
-          />
-          <img src="./mic.png" alt="Mic" className="icon" />
+          <button className="attachment-button" onClick={toggleIcons}>
+            <img src="./plus.png" alt="Attach" />
+          </button>
+          {showIcons && (
+            <div className="icon-box"> {/* New container for the icons */}
+              <label htmlFor="file" className="icon-label">
+                <img src="./img.png" alt="Attach File" />
+              </label>
+              <input
+                type="file"
+                id="file"
+                style={{ display: "none" }}
+                onChange={handleFile}
+              />
+              <img
+                src="./camera.png"
+                alt="Camera"
+                className="icon"
+                onClick={() => setIsCameraOpen(true)}
+              />
+              <img src="./mic.png" alt="Mic" className="icon" />
+            </div>
+          )}
         </div>
 
         <input
@@ -225,9 +258,13 @@ const Chat = () => {
             src="./emoji.png"
             alt="Emoji"
             className="emoji-icon"
-            onClick={() => setOpen((prev) => !prev)}
+            onClick={toggleEmojiPicker}
           />
-          {open && <EmojiPicker onEmojiClick={handleEmoji} />}
+          {open && (
+            <div className="emoji-picker" style={emojiPickerPosition}>
+              <EmojiPicker onEmojiClick={handleEmoji} />
+            </div>
+          )}
         </div>
 
         <button className="send-button" onClick={handleSend}>
