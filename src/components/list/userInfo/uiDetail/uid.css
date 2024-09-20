@@ -1,0 +1,229 @@
+/* Global Styles */
+.detail {
+  flex: 1;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-y: auto; /* Add vertical scroll for large content */
+  max-height: 500px; /* Adjust this based on your content */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: rgba(54, 14, 58, 0.462) transparent; /* For Firefox */
+}
+
+/* User Info and Avatar */
+.detail .user {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #dddddd35;
+}
+
+.detail .user img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.detail .info {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Options Section */
+.detail .info .option {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail .info .option .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail .info .option .title img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Photos Section */
+.detail .info .photos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+  max-height: 200px; /* Limit height for large photo collections */
+  overflow-y: auto; /* Enable vertical scrolling for photos */
+}
+
+.detail .info .photos .photoItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.detail .info .photos .photoItem .photoDetail img {
+  width: 30px;
+  height: 30px;
+}
+
+.detail .info .photos .photoItem .photoDetail span {
+  font-size: 12px;
+  color: lightgray;
+  font-weight: 300;
+}
+
+.detail .info .photos .photoItem .icon {
+  width: 25px;
+  height: 25px;
+}
+
+/* Buttons Section */
+.detail .info .buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail button {
+  padding: 10px 40px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.detail button.logout {
+  background-color: #dc3545;
+  padding: 6px 20px;
+}
+
+.detail button:hover {
+  opacity: 0.8;
+}
+
+/* Popup overlay */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Ensure it is above other content */
+}
+
+/* Popup inner container */
+.popup-inner {
+  width: max-content;
+  height: max-content;
+  padding: 30px;
+  background-color: rgba(17, 25, 40, 0.9); /* Dark background */
+  border-radius: 10px;
+  position: relative;
+  z-index: 1000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Close button */
+.close-popup {
+  display: none;
+}
+
+/* Close Chat Button */
+.close-chat {
+  padding: 10px 20px;
+  background-color: #dc3545; /* Red color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.close-chat:hover {
+  background-color: #c82333; /* Darker red */
+  transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+.close-chat:active {
+  transform: scale(0.98); /* Slight shrink when pressed */
+}
+
+.close-chat:disabled {
+  background-color: #6c757d; /* Gray color for disabled state */
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+/* Settings Options Container */
+.settings-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between the buttons */
+  padding: 10px;
+}
+
+/* Individual buttons inside .settings-options */
+.settings-options button {
+  padding: 10px 20px;
+  background-color: #007bff; /* Default blue color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-options button:hover {
+  background-color: #0056b3; /* Darker blue */
+  transform: scale(1.05); /* Slight zoom-in effect */
+}
+
+.settings-options button:active {
+  transform: scale(0.98); /* Slight shrink when pressed */
+}
+
+
+
+.close-popup:hover {
+  background-color: #c82333;
+}
+
+/* Hide details-popup by default */
+/* Hide details-popup by default */
+.details-popup {
+  display: none; /* Hidden by default */
+}
+
+/* Show details-popup when visible */
+.details-popup.show {
+  display: flex; /* Flex or block to make it visible */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
