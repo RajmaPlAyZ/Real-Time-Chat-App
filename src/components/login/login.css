@@ -1,9 +1,31 @@
+/* Base styles for mobile-first design */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #012a4a; /* Dark background to provide contrast */
+    margin: 0;
+    padding: 0;
+}
+
 .login {
     width: 100%;
-    height: 100%;
+    max-width: 350px; /* Max width to ensure the form looks good on all mobile screens */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spacing between form elements */
     align-items: center;
-    gap: 100px;
+}
+
+.login h2 {
+    font-size: 24px;
+    color: #ffffff;
+    margin-bottom: 10px;
 }
 
 .login .item {
@@ -23,12 +45,15 @@
 }
 
 .login .item form input {
-    padding: 20px;
+    padding: 15px;
     border: none;
     outline: none;
     background-color: rgba(17, 25, 40, 0.6);
     color: white;
     border-radius: 5px;
+    width: 100%;
+    max-width: 350px;
+    font-size: 14px;
 }
 
 .login .item form label {
@@ -38,11 +63,12 @@
     justify-content: space-between;
     cursor: pointer;
     text-decoration: underline;
+    font-size: 14px;
 }
 
 .login .item form label img {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
     object-fit: cover;
     opacity: 0.6;
@@ -50,13 +76,14 @@
 
 .login .item form button {
     width: 100%;
-    padding: 20px;
+    padding: 15px;
     border: none;
     background-color: #1f8ef1;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
+    font-size: 14px;
 }
 
 .login .item form button:disabled {
@@ -74,12 +101,13 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 14px;
 }
 
 .notification.success {
@@ -96,7 +124,8 @@
     background: none;
     border: none;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 8px;
 }
+

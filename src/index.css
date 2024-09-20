@@ -1,3 +1,5 @@
+/* Mobile-first styles */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,10 +8,12 @@
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-
-body{
+body {
   background-image: url("/bg.jpg");
   background-size: cover;
+  background-repeat: no-repeat; 
+  background-position: center; 
+  background-attachment: scroll; /* Scroll background for mobile performance */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,9 +32,62 @@ body{
   display: flex;
 }
 
-.loading{
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .container {
+    width: 95vw; /* Adjust width for medium screens */
+    height: 85vh; /* Adjust height for medium screens */
+    padding: 15px; /* Reduce padding */
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90vw; /* Further adjust width for smaller screens */
+    height: 85vh; /* Further adjust height for smaller screens */
+    padding: 10px; /* Reduce padding further */
+    flex-direction: column; /* Stack elements vertically on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 90vw; /* Full width on very small screens */
+    height: 90vh; /* Adjust height for very small screens */
+    padding: 8px; /* Minimal padding for very small screens */
+    margin-top: 5px; /* Add margin to prevent overlap */
+    margin-bottom: 5px; /* Add margin to prevent overlap */
+  }
+}
+
+.loading {
   padding: 50px;
   font-size: 36px;
   border-radius: 10px;
   background-color: rgba(17, 25, 40, 0.9);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.loading::before {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

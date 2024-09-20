@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
-import "./chatList.css";
-import AddUser from "./addUser/addUser";
-import { useUserStore } from "../../../lib/userStore";
 import { doc, getDoc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "../../../lib/firebase";
+import { useEffect, useState } from "react";
 import { useChatStore } from "../../../lib/chatStore";
+import { db } from "../../../lib/firebase";
+import { useUserStore } from "../../../lib/userStore";
+import Chat from "../../chat/Chat"; // Import the Chat component
+import AddUser from "./addUser/addUser";
+import "./chatList.css";
 
 const ChatList = () => {
   const [chats, setChats] = useState([]);
   const [addMode, setAddMode] = useState(false);
   const [input, setInput] = useState("");
+  const [selectedChat, setSelectedChat] = useState(null); // Track selected chat
 
   const { currentUser } = useUserStore();
   const { chatId, changeChat } = useChatStore();
@@ -59,6 +61,8 @@ const ChatList = () => {
         chats: userChats,
       });
       changeChat(chat.chatId, chat.user);
+
+      setSelectedChat(chat); // Set the selected chat to trigger chat view
     } catch (err) {
       console.log(err);
     }
@@ -69,52 +73,60 @@ const ChatList = () => {
   );
 
   return (
-    <div className="chatList">
-      <div className="search">
-        <div className="searchBar">
-          <img src="./search.png" alt="" />
-          <input
-            type="text"
-            placeholder="Search"
-            onChange={(e) => setInput(e.target.value)}
-          />
-        </div>
-        <img
-          src={addMode ? "./minus.png" : "./plus.png"}
-          alt=""
-          className="add"
-          onClick={() => setAddMode((prev) => !prev)}
-        />
-      </div>
-      {filteredChats.map((chat) => (
-        <div
-          className="item"
-          key={chat.chatId}
-          onClick={() => handleSelect(chat)}
-          style={{
-            backgroundColor: chat?.isSeen ? "transparent" : "#5183fe",
-          }}
-        >
-          <img
-            src={
-              chat.user.blocked.includes(currentUser.id)
-                ? "./avatar.png"
-                : chat.user.avatar || "./avatar.png"
-            }
-            alt=""
-          />
-          <div className="texts">
-            <span>
-              {chat.user.blocked.includes(currentUser.id)
-                ? "User"
-                : chat.user.username}
-            </span>
-            <p>{chat.lastMessage}</p>
+    <div className="chat-container">
+      {/* Only show chat list if no chat is selected */}
+      {!selectedChat && (
+        <div className="chatList">
+          <div className="search">
+            <div className="searchBar">
+              <img src="./search.png" alt="" />
+              <input
+                type="text"
+                placeholder="Search"
+                onChange={(e) => setInput(e.target.value)}
+              />
+            </div>
+            <img
+              src={addMode ? "./minus.png" : "./plus.png"}
+              alt=""
+              className="add"
+              onClick={() => setAddMode((prev) => !prev)}
+            />
           </div>
-        </div>
-      ))}
+          {filteredChats.map((chat) => (
+            <div
+              className="item"
+              key={chat.chatId}
+              onClick={() => handleSelect(chat)} // Handle chat selection
+              style={{
+                backgroundColor: chat?.isSeen ? "transparent" : "#5183fe",
+              }}
+            >
+              <img
+                src={
+                  chat.user.blocked.includes(currentUser.id)
+                    ? "./avatar.png"
+                    : chat.user.avatar || "./avatar.png"
+                }
+                alt=""
+              />
+              <div className="texts">
+                <span>
+                  {chat.user.blocked.includes(currentUser.id)
+                    ? "User"
+                    : chat.user.username}
+                </span>
+                <p>{chat.lastMessage}</p>
+              </div>
+            </div>
+          ))}
 
-      {addMode && <AddUser />}
+          {addMode && <AddUser />}
+        </div>
+      )}
+
+      {/* Only show the Chat component when a chat is selected */}
+      {selectedChat && <Chat />}
     </div>
   );
 };

@@ -1,43 +1,45 @@
-.chatList{
+/* CHATLIST.CSS */
 
+.chatList {
     flex: 1;
-    overflow: scroll;
-
-    overflow-x: hidden;
     overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 
-    .search{
+    .search {
         display: flex;
         align-items: center;
         gap: 20px;
         padding: 20px;
+        flex-wrap: wrap; /* Allows items to wrap on smaller screens */
 
-        .searchBar{
+        .searchBar {
             flex: 1;
             background-color: rgba(54, 14, 58, 0.462);
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 10px; /* Adjusted for smaller screens */
             border-radius: 10px;
             padding: 10px;
 
-            input{
+            input {
                 background-color: transparent;
                 border: none;
                 outline: none;
                 color: white;
-                font-size: 1.2rem;
-                flex:1;
+                font-size: 1rem; /* Slightly smaller for better fit */
+                flex: 1;
             }
 
-            img{
+            img {
                 width: 20px;
                 height: 20px;
                 cursor: pointer;
             }
         }
 
-        .add{
+        .add {
             width: 36px;
             height: 36px;
             background-color: rgba(54, 14, 58, 0.462);
@@ -47,44 +49,121 @@
         }
     }
 
-    .item{
+    .item {
         display: flex;
         align-items: center;
-        gap: 20px;
-        padding: 20px;
+        gap: 15px; /* Slightly reduced gap */
+        padding: 15px; /* Reduced padding for smaller screens */
         cursor: pointer;
         border-bottom: 1px solid #dddddd35;
 
-        img{
-            width: 50px;
-            height: 50px;
+        img {
+            width: 45px; /* Reduced size */
+            height: 45px;
             border-radius: 50%;
             object-fit: cover;
         }
 
-        .texts{
+        .texts {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px; /* Reduced gap for responsiveness */
 
-            span{
+            span {
                 font-weight: 500;
+                font-size: 0.9rem; /* Adjusted for better fit */
             }
 
-            p{
-                font-size: 14px;
+            p {
+                font-size: 0.8rem; /* Smaller text for better fit */
                 font-weight: 300;
             }
         }
     }
 }
 
-/* Custom scrollbar for .chatList */
-.chatList::-webkit-scrollbar {
-    width: 6px; /* Adjust the width of the scrollbar */
+  /* Responsive Adjustments */
+@media (max-width: 768px) {
+    .chatList {
+        .search {
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .item {
+            gap: 10px;
+            padding: 10px;
+
+            img {
+                width: 40px; /* Further reduced size for smaller screens */
+                height: 40px;
+            }
+
+            .texts {
+                gap: 6px;
+
+                span {
+                    font-size: 0.85rem;
+                }
+
+                p {
+                    font-size: 0.75rem;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .chatList {
+        .search {
+            flex-direction: column; /* Stack items vertically */
+            gap: 10px;
+
+            .searchBar {
+                gap: 10px;
+                padding: 8px;
+
+                input {
+                    font-size: 0.9rem; /* Smaller text for better fit */
+                }
+            }
+
+            .add {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        .item {
+            gap: 8px;
+            padding: 8px;
+
+            img {
+                width: 35px;
+                height: 35px;
+            }
+
+            .texts {
+                gap: 5px;
+
+                span {
+                    font-size: 0.8rem;
+                }
+
+                p {
+                    font-size: 0.7rem;
+                }
+            }
+        }
+    }
 }
 
 
+  /* Custom scrollbar for .chatList */
+.chatList::-webkit-scrollbar {
+    width: 6px; /* Adjust the width of the scrollbar */
+}
 
 .chatList::-webkit-scrollbar-thumb {
     background: rgba(54, 14, 58, 0.462); /* Color of the scrollbar thumb */
