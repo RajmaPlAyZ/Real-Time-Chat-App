@@ -178,6 +178,16 @@
   font-size: 14px;
 }
 
+.chat .message .texts img {
+    width: 100%; /* Takes full width of the parent container */
+    height: auto; /* Maintains aspect ratio */
+    max-width: 250px; /* Maximum width of the image */
+    max-height: 250px; /* Maximum height of the image */
+    border-radius: 10px;
+    object-fit: cover; /* Ensures the image covers the space without distorting */
+}
+
+
 /* Camera Modal */
 .camera-modal {
   position: fixed;
